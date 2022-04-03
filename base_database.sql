@@ -1,0 +1,11 @@
+CREATE DATABASE `allactivity`
+USE `allactivity`;
+CREATE TABLE `logs` (
+	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`start` DATETIME NOT NULL DEFAULT NOW(),
+	`end` DATETIME NOT NULL DEFAULT NOW(),
+	`description` VARCHAR(250) NOT NULL DEFAULT '',
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8mb3_general_ci'
+;
