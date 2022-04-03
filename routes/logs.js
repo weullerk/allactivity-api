@@ -1,12 +1,35 @@
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
 
-const logService = require('../database/log');
+const db = require('../db');
+const logs = require('../database/log');
 
-/* GET users listing. */
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({extended: false});
+
+/* GET list logs data */
 router.get('/list-logs', async function(req, res, next) {
-  const logs = await logService.listLogs();
-  res.send(logs);
+
+  var allLogs = await logs.findAll();
+
+  res.send(allLogs);
+
+});
+
+/* POST create log. */
+router.post('/create-log', urlencodedParser, async function(req, res) {
+
+  const data = req.body;
+
+  const newLog = await logs.create({
+    start: data.start,
+    end: data.end,
+    description: data.description
+  });
+
+  res.send(newLog);
+
 });
 
 module.exports = router;

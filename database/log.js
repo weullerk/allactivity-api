@@ -1,30 +1,22 @@
-const util = require('util');
-const [db, query, end, ] = require('./db');
+const Sequelize = require('sequelize');
+const database = require('../db');
 
-/* List all logs from logs table in descending order */
-const log = {
+const logs = database.define('logs', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true
+  },
+  start: {
+    type: Sequelize.DATE,
+    allowNull: false
+  },
+  end: {
+    type: Sequelize.DATE,
+    allowNull: false
+  },
+  description: Sequelize.STRING
+});
 
-  listLogs: async () => {
-
-    const conn = db();
-    conn.connect();
-
-    try {
-
-      const data = await query(conn, "SELECT id, start, end, description FROM logs ORDER BY id DESC");
-      await end(conn);
-
-      return data;
-
-    } catch (err) {
-
-      await end(conn);
-      return [];
-
-    }
-
-  }
-
-};
-
-module.exports = log;
+module.exports = logs;

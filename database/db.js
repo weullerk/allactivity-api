@@ -12,4 +12,4 @@ const query = (conn, sql, args = null) => util.promisify(conn.query).call(conn, 
 
 const end = (conn) => util.promisify(conn.end).call(conn);
 
-module.exports = [db, query, end];
+module.exports = db;
