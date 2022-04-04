@@ -22,13 +22,21 @@ router.post('/create-log', urlencodedParser, async function(req, res) {
 
   const data = req.body;
 
-  const newLog = await logs.create({
-    start: data.start,
-    end: data.end,
-    description: data.description
-  });
+  try {
 
-  res.send(newLog);
+    const newLog = await logs.create({
+      start: data.start,
+      end: data.end,
+      description: data.description
+    });
+
+    res.status(200).send(newLog);
+
+  } catch (err) {
+
+    res.status(500).send('Error when creating log.');
+
+  }
 
 });
 
